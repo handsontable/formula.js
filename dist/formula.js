@@ -7,7 +7,7 @@
 		exports["formulajs"] = factory();
 	else
 		root["formulajs"] = factory();
-})(this, function() {
+})(typeof self !== 'undefined' ? self : this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1355,15 +1355,49 @@ exports.SUM = function() {
   return result;
 };
 
-exports.SUMIF = function(range, criteria) {
-  range = utils.parseNumberArray(utils.flatten(range));
+
+// exports.SUMIF = function(range, criteria) {
+//   range = utils.parseNumberArray(utils.flatten(range));
+//   if (range instanceof Error) {
+//     return range;
+//   }
+//   var result = 0;
+//   for (var i = 0; i < range.length; i++) {
+//     result += (eval(range[i] + criteria)) ? range[i] : 0; // jshint ignore:line
+//   }
+//   return result;
+// };
+
+// fixed by kenputer
+exports.SUMIF = function(range, criteria, target) {
+  range = utils.flatten(range);
+  if (!/[<>=!]/.test(criteria)) {
+    criteria = '=="' + criteria + '"';
+  }
+
   if (range instanceof Error) {
     return range;
   }
+
+  if (target === undefined) {
+    target = utils.parseNumberArray(range);
+  } else {
+    target = utils.parseNumberArray(utils.flatten(target));
+  }
+
   var result = 0;
   for (var i = 0; i < range.length; i++) {
-    result += (eval(range[i] + criteria)) ? range[i] : 0; // jshint ignore:line
+    if (typeof range[i] !== 'string') {
+      if (eval(range[i] + criteria)) { // jshint ignore:line
+        result += target[i];
+      }
+    } else {
+      if (eval('"' + range[i] + '"' + criteria)) { // jshint ignore:line
+        result += target[i];
+      }
+    }
   }
+
   return result;
 };
 
@@ -4370,7 +4404,7 @@ function serial(date) {
 
 /* WEBPACK VAR INJECTION */(function(process) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
  * numbro.js
- * version : 1.11.0
+ * version : 1.11.1
  * author : Företagsplatsen AB
  * license : MIT
  * http://www.foretagsplatsen.se
@@ -4384,7 +4418,7 @@ function serial(date) {
     ************************************/
 
     var numbro,
-        VERSION = '1.11.0',
+        VERSION = '1.11.1',
         binarySuffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
         decimalSuffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
         bytes = {
@@ -5654,9 +5688,9 @@ function serial(date) {
 
         /*global define:false */
         if (true) {
-            !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+            !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function() {
                 return numbro;
-            }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+            }).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
         }
     }
@@ -8962,17 +8996,6 @@ jStat.extend({
     return jStat.map(arr, function(value) { return value * arg; });
   },
 
-  outer:function(A,B){
-    /* outer([1,2,3],[4,5,6])
-    ===
-    [[1],[2],[3]] times [[4,5,6]]
-    ->
-    [[4,5,6],[8,10,12],[12,15,18]]
-    */
-    return jStat.multiply(A.map(function(t){return [t]}),[B]);
-  },
-
-
   // outer([1,2,3],[4,5,6])
   // ===
   // [[1],[2],[3]] times [[4,5,6]]
@@ -10360,8 +10383,10 @@ jStat.models = (function(){
     var model = ols(endog,exog);
     var ttest = t_test(model);
     var ftest = F_test(model);
+    // Provide the Wherry / Ezekiel / McNemar / Cohen Adjusted R^2
+    // Which matches the 'adjusted R^2' provided by R's lm package
     var adjust_R2 =
-        1 - (1 - model.rsquared) * ((model.nobs - 1) / (model.df_resid));
+        1 - (1 - model.R2) * ((model.nobs - 1) / (model.df_resid));
     model.t = ttest;
     model.f = ftest;
     model.adjust_R2 = adjust_R2;
@@ -12349,6 +12374,7 @@ exports['es-CL'] = require('./es-CL.js');
 exports['es-CO'] = require('./es-CO.js');
 exports['es-CR'] = require('./es-CR.js');
 exports['es-ES'] = require('./es-ES.js');
+exports['es-MX'] = require('./es-MX.js');
 exports['es-NI'] = require('./es-NI.js');
 exports['es-PE'] = require('./es-PE.js');
 exports['es-PR'] = require('./es-PR.js');

@@ -1,11 +1,11 @@
 {
-  "author": "Handsoncode <hello@handsontable.com>",
+  "author": "Wstn2010 <wstn2010@gmail.com>",
   "name": "formulajs",
   "description": "JavaScript implementation of most Microsoft Excel formula functions",
-  "version": "1.2.2",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:handsontable/formula.js.git"
+    "url": "git@github.com:wstn2010/formula.js.git"
   },
   "main": "index.js",
   "bin": {
