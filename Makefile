@@ -1,9 +1,18 @@
+ifdef SYSTEMROOT
+webpack = node_modules\.bin\webpack
+jshint = node_modules\.bin\jshint
+mocha = node_modules\.bin\mocha
+browserify = node_modules\.bin\browserify
+http-server = node_modules\.bin\http-server
+codeclimate-test-reporter = node_modules\.bin\codeclimate-test-reporter
+else
 webpack = node_modules/.bin/webpack
 jshint = node_modules/.bin/jshint
 mocha = node_modules/.bin/mocha
 browserify = node_modules/.bin/browserify
 http-server = node_modules/.bin/http-server
 codeclimate-test-reporter = node_modules/.bin/codeclimate-test-reporter
+endif
 
 build:
 	@$(webpack)
