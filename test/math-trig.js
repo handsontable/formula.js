@@ -673,6 +673,8 @@ describe('Math & Trig', function() {
       [3, 3]
     ]).should.equal(24);
     mathTrig.SUM(1, 'invalid').should.equal(1);
+    mathTrig.SUM('1,5', '2,5').should.equal(4);
+    mathTrig.SUM('2,5', 0).should.equal(2.5);
   });
 
   it("SUMIF", function() {
