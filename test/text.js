@@ -185,6 +185,7 @@ describe('Text', function() {
   it("SUBSTITUTE", function() {
     text.SUBSTITUTE('Jim Alateras', 'im', 'ames').should.equal("James Alateras");
     text.SUBSTITUTE('Jim Alateras', '', 'ames').should.equal("Jim Alateras");
+    text.SUBSTITUTE('Jim Alateras', 'im', '').should.equal("J Alateras");
     text.SUBSTITUTE('Jim Alateras', undefined, 'ames').should.equal("Jim Alateras");
     text.SUBSTITUTE('', 'im', 'ames').should.equal("");
     should.not.exist(text.SUBSTITUTE(undefined, 'im', 'ames'));
