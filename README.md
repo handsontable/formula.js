@@ -1,3 +1,8 @@
+:warning: This repository is deprecated. We've released new and improved [HyperFormula](https://github.com/handsontable/hyperformula/) engine.
+
+
+<details>
+
 formula.js [![Build Status](https://travis-ci.org/handsontable/formula.js.png?branch=master)](https://travis-ci.org/handsontable/formula.js) [![Test Coverage](https://codeclimate.com/github/handsontable/formula.js/badges/coverage.svg)](https://codeclimate.com/github/handsontable/formula.js/coverage)
 ==========
 
@@ -12,3 +17,6 @@ LICENSE
 
 formula.js is freely distributable under the terms of the MIT license.
 Copyright (c) 2014 Sutoiku, Inc.
+  
+</details>
+
